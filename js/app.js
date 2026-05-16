@@ -121,20 +121,22 @@ document
         },
 
         body: JSON.stringify(studentData)
-
     })
-
     .then(response => response.json())
-
     .then(data => {
 
-        alert(data.message);
+        showToast(data.message);
 
         document.getElementById('studentForm').reset();
         document.getElementById('student_id').value = '';
 
         loadStudents();
     });
+
+    //  Reset Button
+    let submitBtn = document.getElementById('submitBtn');
+    submitBtn.innerText = 'Save Student';
+    submitBtn.style.background = '#2563eb';
 });
 
 /*
@@ -156,11 +158,8 @@ function editStudent(id){
         body: JSON.stringify({
             sid:id
         })
-
     })
-
     .then(response => response.json())
-
     .then(data => {
 
         let student = data.data;
@@ -181,34 +180,83 @@ function editStudent(id){
 
 /*
 |--------------------------------------------------------------------------
+| Change Button To Update
+|--------------------------------------------------------------------------
+*/
+
+let submitBtn = document.getElementById('submitBtn');
+submitBtn.innerText = 'Update Student';
+submitBtn.style.background = '#f59e0b';
+
+/*
+|--------------------------------------------------------------------------
 | Delete Student
 |--------------------------------------------------------------------------
 */
 
 function deleteStudent(id){
 
-    if(confirm("Delete this student?")){
+    deleteStudentId = id;
+    document.getElementById('deleteModal').classList.add('show');
+}
 
-        fetch(`${API_URL}/api-delete.php`, {
+/*
+|--------------------------------------------------------------------------
+| Cancel Delete
+|--------------------------------------------------------------------------
+*/
 
-            method:'DELETE',
+let deleteStudentId = null;
 
-            headers:{
-                'Content-Type':'application/json'
-            },
+function closeModal(){
+    document.getElementById('deleteModal').classList.remove('show');
+}
 
-            body: JSON.stringify({
-                sid:id
-            })
+/*
+|--------------------------------------------------------------------------
+| Confirm Delete
+|--------------------------------------------------------------------------
+*/
+
+document
+.getElementById('confirmDeleteBtn')
+.addEventListener('click', function(){
+
+    fetch(`${API_URL}/api-delete.php`, {
+
+        method:'DELETE',
+
+        headers:{
+            'Content-Type':'application/json'
+        },
+
+        body: JSON.stringify({
+            sid:deleteStudentId
         })
 
-        .then(response => response.json())
+    })
+    .then(response => response.json())
+    .then(data => {
+        showToast(data.message);
+        closeModal();
+        loadStudents();
+    });
+});
 
-        .then(data => {
-            alert(data.message);
-            loadStudents();
-        });
-    }
+/*
+|--------------------------------------------------------------------------
+| Toast Notification
+|--------------------------------------------------------------------------
+*/
+
+function showToast(message){
+
+    let toast = document.getElementById('toast');
+    toast.innerText = message;
+    toast.classList.add('show');
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
 }
 
 /*

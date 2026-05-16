@@ -221,3 +221,95 @@ table tbody tr:hover{
         font-size:24px;
     }
 }
+
+/*
+|--------------------------------------------------------------------------
+| Toast Notification
+|--------------------------------------------------------------------------
+*/
+
+#toast{
+    position:fixed;
+    top:30px;
+    right:30px;
+    background:#111827;
+    color:#fff;
+    padding:16px 22px;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:500;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-20px);
+    transition:0.3s;
+    z-index:9999;
+}
+
+#toast.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Modal
+|--------------------------------------------------------------------------
+*/
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    visibility:hidden;
+    transition:0.3s;
+    z-index:999;
+}
+
+.modal-overlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal{
+    background:#fff;
+    width:400px;
+    padding:30px;
+    border-radius:16px;
+    text-align:center;
+    transform:scale(0.9);
+    transition:0.3s;
+}
+
+.modal-overlay.show .modal{
+    transform:scale(1);
+}
+
+.modal h2{
+    margin-bottom:15px;
+}
+
+.modal p{
+    color:#666;
+    margin-bottom:25px;
+}
+
+.modal-actions{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+}
+
+.cancel-btn{
+    background:#ddd;
+    color:#111;
+}
+
+.delete-btn{
+    background:#ef4444;
+    color:#fff;
+}
