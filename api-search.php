@@ -128,7 +128,7 @@ if (mysqli_num_rows($result) > 0) {
 
     echo json_encode([
         'status'  => false,
-        'message' => 'No Record Found'
+        'message' => 'No Student Found'
     ]);
 }
 
